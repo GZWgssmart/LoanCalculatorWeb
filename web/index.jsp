@@ -121,6 +121,33 @@
         </div>
       </div>
 
+      <div id="result" class="row" style="display:none;">
+        <div class="col-sm-12">
+          <p>
+            总贷款数：<span id="totalLoan"></span>&nbsp;
+            还款期限：<span id="totalMonth"></span>&nbsp;
+            总还款数：<span id="totalMoney"></span>&nbsp;
+            总利息数: <span id="totalInterest"></span>&nbsp;
+            首月还款数：<span id="firstMoney"></span>&nbsp;
+            月均还款数: <span id="avgMoney"></span>
+          </p>
+            <h4>还款计划</h4>
+              <table id="loanList" data-mobile-responsive="true">
+                <thead>
+                  <tr>
+                    <th data-field="month">期数</th>
+                    <th data-field="repayment">该期还款数</th>
+                    <th data-field="payPrincipal">该期本金</th>
+                    <th data-field="interest">该期利息</th>
+                    <th data-field="remainTotal">剩余贷款数</th>
+                    <th data-field="remainPrincipal">剩余本金数</th>
+                  </tr>
+                </thead>
+              </table>
+        </div>
+
+      </div>
+
     </div>
 
     <script src="js/jquery.min.js?v=2.1.4"></script>
@@ -134,8 +161,15 @@
               function (data) {
                 if (data.result != undefined && data.result != null) {
                     $("#errMsg").text(data.message);
-                } else if (data.loan != undefined && data.loan != null) {
+                } else if (data.totalLoanMoney != undefined && data.totalLoanMoney != null) {
                     // 生成table
+                    $("#totalLoan").text(data.totalLoanMoney);
+                    $("#totalMonth").text(data.totalMonth);
+                    $("#totalMoney").text(data.totalRepayment);
+                    $("#totalInterest").text(data.totalInterest);
+                    $("#firstMoney").text(data.firstRepayment);
+                    $("#avgMoney").text(data.avgRepayment);
+                    $("#result").attr("style", "display:block");
                 }
               }, "json"
           );
