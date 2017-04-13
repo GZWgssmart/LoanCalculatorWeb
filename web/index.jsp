@@ -29,6 +29,8 @@
     <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
     <link href="css/animate.min.css" rel="stylesheet">
     <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+
   </head>
   <body>
     <div class="container">
@@ -132,17 +134,38 @@
             月均还款数: <span id="avgMoney"></span>
           </p>
             <h4>还款计划</h4>
-              <table id="loanList" data-mobile-responsive="true">
+
+              <table class="table table-hover" id="loanList"
+                     data-pagination="true"
+                     data-show-refresh="true"
+                     data-showColumns="true">
                 <thead>
-                  <tr>
-                    <th data-field="month">期数</th>
-                    <th data-field="repayment">该期还款数</th>
-                    <th data-field="payPrincipal">该期本金</th>
-                    <th data-field="interest">该期利息</th>
-                    <th data-field="remainTotal">剩余贷款数</th>
-                    <th data-field="remainPrincipal">剩余本金数</th>
-                  </tr>
+                <tr>
+                  <th  data-field="month" data-sortable="true">
+                    期数
+                  </th>
+                  <th data-field="repayment" >
+                    该期还款数
+                  </th>
+                  <th data-field="payPrincipal" >
+                    该期本金
+                  </th>
+                  <th  data-field="interest" data-sortable="true">
+                    该期利息
+                  </th>
+                  <th data-field="remainTotal" >
+                    剩余贷款数
+                  </th>
+                  <th data-field="remainPrincipal" >
+                    剩余本金数
+                  </th>
+
+
+                </tr>
                 </thead>
+                <tbody>
+                </tbody>
+
               </table>
         </div>
 
@@ -153,12 +176,16 @@
     <script src="js/jquery.min.js?v=2.1.4"></script>
     <script src="js/bootstrap.min.js?v=3.3.6"></script>
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="<%=path %>/js/bootstrap-table.js"></script>
+    <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
     <script>
+      var tableData = "";
       function calLoan() {
           $("#errMsg").text("");
           $.post("<%=path %>/cal",
             $("#loanForm").serialize(),
               function (data) {
+                tableData = data;
                 if (data.result != undefined && data.result != null) {
                     $("#errMsg").text(data.message);
                 } else if (data.totalLoanMoney != undefined && data.totalLoanMoney != null) {
@@ -170,10 +197,45 @@
                     $("#firstMoney").text(data.firstRepayment);
                     $("#avgMoney").text(data.avgRepayment);
                     $("#result").attr("style", "display:block");
+                  tableData = data.allLoans;
+                  initTable();
                 }
               }, "json"
           );
       }
+
+      function initTable() {
+        //先销毁表格
+        $('#loanList').bootstrapTable('destroy');
+        //初始化表格,动态从服务器加载数据
+        $("#loanList").bootstrapTable({
+          data: tableData,
+          striped: false,  //表格显示条纹
+          pagination: true, //启动分页
+          pageSize: 20,  //每页显示的记录数
+          pageNumber:1, //当前第几页
+          pageList: [15, 20, 25],  //记录数可选列表
+          search: true,  //是否启用查询
+          showColumns: true,  //显示下拉框勾选要显示的列
+          showRefresh: false,  //显示刷新按钮
+          strictSearch: true,
+          clickToSelect: true,  //是否启用点击选中行
+          uniqueId: "month",                     //每一行的唯一标识，一般为主键列
+          sortable: true,                     //是否启用排序
+          sortOrder: "asc",                   //排序方式
+          sidePagination: "client", //表示服务端请求
+
+        });
+      }
+
+      $(document).ready(function () {
+        //调用函数，初始化表格
+        initTable();
+
+
+        //当点击查询按钮的时候执行
+        $("#search").bind("click", initTable);
+      });
     </script>
 
   </body>
