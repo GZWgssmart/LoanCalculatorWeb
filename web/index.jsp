@@ -92,6 +92,8 @@
                   <option value="4.9">4.9%</option>
                   <option value="4.75">4.75%</option>
                   <option value="4.35">4.35%</option>
+                  <option value="3.25">3.25%</option>
+                  <option value="2.75">2.75%</option>
                 </select>
                 <span class="help-block m-b-none">请选择贷款年利率</span>
               </div>
