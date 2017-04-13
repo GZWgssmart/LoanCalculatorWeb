@@ -89,9 +89,9 @@
 
               <div class="col-sm-10">
                 <select class="form-control" name="rate">
-                  <option value="4.35">4.35%</option>
-                  <option value="4.75">4.75%</option>
                   <option value="4.9">4.9%</option>
+                  <option value="4.75">4.75%</option>
+                  <option value="4.35">4.35%</option>
                 </select>
                 <span class="help-block m-b-none">请选择贷款年利率</span>
               </div>
@@ -125,7 +125,7 @@
 
       <div id="result" class="row" style="display:none;">
         <div class="col-sm-12">
-          <p>
+          <p style="font-size:16px;font-weight:bold;">
             总贷款数：<span id="totalLoan"></span>&nbsp;
             还款期限：<span id="totalMonth"></span>&nbsp;
             总还款数：<span id="totalMoney"></span>&nbsp;
@@ -171,6 +171,12 @@
 
       </div>
 
+      <div class="row">
+        <div class="col-sm-12">
+          &copy;Wgssmart&nbsp;&nbsp; QQ:847315251&nbsp;&nbsp;微信：Wgssmart
+        </div>
+      </div>
+
     </div>
 
     <script src="js/jquery.min.js?v=2.1.4"></script>
@@ -185,7 +191,6 @@
           $.post("<%=path %>/cal",
             $("#loanForm").serialize(),
               function (data) {
-                tableData = data;
                 if (data.result != undefined && data.result != null) {
                     $("#errMsg").text(data.message);
                 } else if (data.totalLoanMoney != undefined && data.totalLoanMoney != null) {
@@ -214,7 +219,7 @@
           pagination: true, //启动分页
           pageSize: 20,  //每页显示的记录数
           pageNumber:1, //当前第几页
-          pageList: [15, 20, 25],  //记录数可选列表
+          pageList: [20, 30, 40, 50, 60],  //记录数可选列表
           search: true,  //是否启用查询
           showColumns: true,  //显示下拉框勾选要显示的列
           showRefresh: false,  //显示刷新按钮
