@@ -42,7 +42,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">总金额</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" name="total"> <span class="help-block m-b-none">请输入总金额数</span>
+                <input type="text" class="form-control" name="total"> <span class="help-block m-b-none">请输入总金额数，如1000000</span>
               </div>
             </div>
 
