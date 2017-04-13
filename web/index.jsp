@@ -138,7 +138,8 @@
               <table class="table table-hover" id="loanList"
                      data-pagination="true"
                      data-show-refresh="true"
-                     data-showColumns="true">
+                     data-showColumns="true"
+                     data-height="960" >
                 <thead>
                 <tr>
                   <th  data-field="month" data-sortable="true">
@@ -228,8 +229,7 @@
           uniqueId: "month",                     //每一行的唯一标识，一般为主键列
           sortable: true,                     //是否启用排序
           sortOrder: "asc",                   //排序方式
-          sidePagination: "client", //表示服务端请求
-
+          sidePagination: "client" //表示服务端请求
         });
       }
 
