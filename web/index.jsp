@@ -25,11 +25,12 @@
     <![endif]-->
 
     <link rel="shortcut icon" href="favicon.ico">
-    <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
-    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
-    <link href="css/animate.min.css" rel="stylesheet">
-    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="<%=path %>/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="<%=path %>/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="<%=path %>/css/animate.min.css" rel="stylesheet">
+    <link href="<%=path %>/css/style.min862f.css?v=4.1.0" rel="stylesheet">
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css">
 
   </head>
   <body>
@@ -38,7 +39,6 @@
         <div class="col-sm-12">
           <h1 class="col-sm-offset-5">贷款计算</h1>
           <form id="loanForm" class="form-horizontal">
-            <span class="text-danger col-sm-offset-2" id="errMsg"></span>
             <div class="form-group">
               <label class="col-sm-2 control-label">总金额</label>
               <div class="col-sm-10">
@@ -182,11 +182,12 @@
 
     </div>
 
-    <script src="js/jquery.min.js?v=2.1.4"></script>
-    <script src="js/bootstrap.min.js?v=3.3.6"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="<%=path %>/js/jquery.min.js?v=2.1.4"></script>
+    <script src="<%=path %>/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="<%=path %>/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="<%=path %>/js/bootstrap-table.js"></script>
     <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="<%=path%>/js/bootstrap-dialog.min.js"></script>
     <script>
       var tableData = "";
       function calLoan() {
@@ -195,7 +196,10 @@
             $("#loanForm").serialize(),
               function (data) {
                 if (data.result != undefined && data.result != null) {
-                    $("#errMsg").text(data.message);
+                    BootstrapDialog.show({
+                        title: '贷款计算提醒',
+                        message: '请输入或选择数据哦!'
+                    });
                 } else if (data.totalLoanMoney != undefined && data.totalLoanMoney != null) {
                     // 生成table
                     $("#totalLoan").text(data.totalLoanMoney);
